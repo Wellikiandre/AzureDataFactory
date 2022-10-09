@@ -3,7 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "CopyData",
+				"description": "Copiar dados de Origem para Coletor onde arquivo de Origem está github raw via http e será armazenado no Coletor Banco de Dados SQL na Azure.",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
