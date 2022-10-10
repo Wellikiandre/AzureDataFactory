@@ -7,23 +7,10 @@
 		},
 		"annotations": [],
 		"type": "SqlServerTable",
-		"schema": [
-			{
-				"name": "Movies",
-				"type": "varchar"
-			},
-			{
-				"name": "Title",
-				"type": "varchar"
-			},
-			{
-				"name": "genres",
-				"type": "varchar"
-			}
-		],
+		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "tblMovies"
+			"table": "tblMovies2"
 		}
 	}
 }
