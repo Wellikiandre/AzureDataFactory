@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "moveis_bronze",
+				"fileName": "moveis_bronze.csv",
 				"folderPath": "Raw",
 				"fileSystem": "disco1"
 			},
