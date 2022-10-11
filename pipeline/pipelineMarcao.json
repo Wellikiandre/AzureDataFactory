@@ -56,7 +56,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CopiarDadosDoGit",
+						"referenceName": "Moveis",
 						"type": "DatasetReference"
 					}
 				],
@@ -69,7 +69,7 @@
 			}
 		],
 		"folder": {
-			"name": "PipMoveis/PipComMarcao"
+			"name": "PipMoveis/Copy"
 		},
 		"annotations": []
 	}
