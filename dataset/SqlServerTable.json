@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "tblMovies2"
+			"table": "tblMovies"
 		}
 	}
 }
