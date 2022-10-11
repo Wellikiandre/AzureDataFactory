@@ -1,6 +1,7 @@
 {
-	"name": "pipelineMarcao",
+	"name": "pipelineMoveis1",
 	"properties": {
+		"description": "Levar dados do git para banco de dados sql na Azure",
 		"activities": [
 			{
 				"name": "ExtrairECarregar",
