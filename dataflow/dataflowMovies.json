@@ -15,7 +15,11 @@
 					"name": "Movies"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "Saida"
+				}
+			],
 			"transformations": [
 				{
 					"name": "SelectCorrecaoNomeColuna"
@@ -30,6 +34,9 @@
 				},
 				{
 					"name": "RankMoviesByRating"
+				},
+				{
+					"name": "aggregateRatings"
 				}
 			],
 			"scriptLines": [
@@ -57,7 +64,22 @@
 				"     skipDuplicateMapOutputs: true) ~> SelectCorrecaoNomeColuna",
 				"SelectCorrecaoNomeColuna filter(toInteger(year)>1950) ~> filterAno",
 				"filterAno derive(PrimeiroGenre = iif(locate('|',genres)>1, left(genres,(locate('|',genres)-1)), genres)) ~> derivedColumnGenero",
-				"derivedColumnGenero window() ~> RankMoviesByRating"
+				"derivedColumnGenero window(over(PrimeiroGenre,",
+				"          year),",
+				"     desc({Rotten Tomato}, true),",
+				"     RankGeneroAno = rank()) ~> RankMoviesByRating",
+				"RankMoviesByRating aggregate(groupBy(PrimeiroGenre,",
+				"          year),",
+				"     {MedíaNota} = avg({Rotten Tomato}),",
+				"          {Qte Filmes Ano} = count(year),",
+				"          {Melhor Filme Rank} = last(title),",
+				"          {Nota Melhor Filme} = last({Rotten Tomato}),",
+				"          {Pior Filme Rank} = first(title),",
+				"          {Nota Pior Filme} = first({Rotten Tomato})) ~> aggregateRatings",
+				"aggregateRatings sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Saida"
 			]
 		}
 	}

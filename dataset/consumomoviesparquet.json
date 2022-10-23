@@ -1,0 +1,23 @@
+{
+	"name": "consumomoviesparquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Ouro"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Ouro",
+				"fileSystem": "disco1"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
