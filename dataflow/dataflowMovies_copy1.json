@@ -1,0 +1,95 @@
+{
+	"name": "dataflowMovies_copy1",
+	"properties": {
+		"folder": {
+			"name": "Moveis"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "BronzeMovies",
+						"type": "DatasetReference"
+					},
+					"name": "Movies"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ConsumoMoviesCSV",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SelectCorrecaoNomeColuna"
+				},
+				{
+					"name": "filterAno",
+					"description": "Tudo Acima de 1950"
+				},
+				{
+					"name": "derivedColumnGenero",
+					"description": "Coluna derivada de genre, captura o primeiro texto até o texto ('|')"
+				},
+				{
+					"name": "RankMoviesByRating"
+				},
+				{
+					"name": "aggregateRatings"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          movie as integer,",
+				"          title as string,",
+				"          genres as string,",
+				"          year as short,",
+				"          Rating as short,",
+				"          {Rotton Tomato} as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false) ~> Movies",
+				"Movies select(mapColumn(",
+				"          movie,",
+				"          title,",
+				"          genres,",
+				"          year,",
+				"          Rating,",
+				"          {Rotten Tomato} = {Rotton Tomato}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectCorrecaoNomeColuna",
+				"SelectCorrecaoNomeColuna filter(toInteger(year)>1950) ~> filterAno",
+				"filterAno derive(PrimeiroGenre = iif(locate('|',genres)>1, left(genres,(locate('|',genres)-1)), genres)) ~> derivedColumnGenero",
+				"derivedColumnGenero window(over(PrimeiroGenre,",
+				"          year),",
+				"     desc({Rotten Tomato}, true),",
+				"     RankGeneroAno = rank()) ~> RankMoviesByRating",
+				"RankMoviesByRating aggregate(groupBy(PrimeiroGenre,",
+				"          year),",
+				"     MediaNota = avg({Rotten Tomato}),",
+				"          QteFilmesAno = count(year),",
+				"          MelhorFilmeRank = last(title),",
+				"          NotaMelhorFilme = last({Rotten Tomato}),",
+				"          PiorFilmeRank = first(title),",
+				"          NotaPiorFilme = first({Rotten Tomato})) ~> aggregateRatings",
+				"aggregateRatings sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['consumoMovies.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}
