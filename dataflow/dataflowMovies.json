@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "dataflowMovies",
 	"properties": {
 		"folder": {
 			"name": "Moveis"
@@ -16,19 +16,48 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "SelectCorrecaoNomeColuna"
+				},
+				{
+					"name": "filterAno",
+					"description": "Tudo Acima de 1950"
+				},
+				{
+					"name": "derivedColumnGenero",
+					"description": "Coluna derivada de genre, captura o primeiro texto até o texto ('|')"
+				},
+				{
+					"name": "RankMoviesByRating"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          movie as string,",
+				"          movie as integer,",
 				"          title as string,",
 				"          genres as string,",
-				"          year as string,",
-				"          Rating as string,",
-				"          {Rotton Tomato} as string",
+				"          year as short,",
+				"          Rating as short,",
+				"          {Rotton Tomato} as short",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> Movies"
+				"     limit: 100,",
+				"     ignoreNoFilesFound: false) ~> Movies",
+				"Movies select(mapColumn(",
+				"          movie,",
+				"          title,",
+				"          genres,",
+				"          year,",
+				"          Rating,",
+				"          {Rotten Tomato} = {Rotton Tomato}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SelectCorrecaoNomeColuna",
+				"SelectCorrecaoNomeColuna filter(toInteger(year)>1950) ~> filterAno",
+				"filterAno derive(PrimeiroGenre = iif(locate('|',genres)>1, left(genres,(locate('|',genres)-1)), genres)) ~> derivedColumnGenero",
+				"derivedColumnGenero window() ~> RankMoviesByRating"
 			]
 		}
 	}
