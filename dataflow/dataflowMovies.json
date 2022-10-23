@@ -21,7 +21,7 @@
 						"referenceName": "consumomoviesparquet",
 						"type": "DatasetReference"
 					},
-					"name": "Saida",
+					"name": "SaidaParquet",
 					"rejectedDataLinkedService": {
 						"referenceName": "AzureDataLakeStorage",
 						"type": "LinkedServiceReference"
@@ -91,7 +91,7 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> Saida"
+				"     skipDuplicateMapOutputs: true) ~> SaidaParquet"
 			]
 		}
 	}
