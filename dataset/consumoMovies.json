@@ -1,0 +1,23 @@
+{
+	"name": "consumoMovies",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Ouro"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Ouro",
+				"fileSystem": "disco1"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
