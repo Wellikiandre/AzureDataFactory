@@ -1,6 +1,9 @@
 {
 	"name": "ExemploTeste",
 	"properties": {
+		"folder": {
+			"name": "PipMoveis/Copy"
+		},
 		"annotations": []
 	}
 }
