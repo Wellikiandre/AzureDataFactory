@@ -15,7 +15,15 @@
 					"name": "Movies"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ConsumoMoviesCSV",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "SelectCorrecaoNomeColuna"
@@ -71,7 +79,15 @@
 				"          MelhorFilmeRank = last(title),",
 				"          NotaMelhorFilme = last({Rotten Tomato}),",
 				"          PiorFilmeRank = first(title),",
-				"          NotaPiorFilme = first({Rotten Tomato})) ~> aggregateRatings"
+				"          NotaPiorFilme = first({Rotten Tomato})) ~> aggregateRatings",
+				"aggregateRatings sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['consumoMovies.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
