@@ -54,7 +54,6 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     limit: 100,",
 				"     ignoreNoFilesFound: false) ~> Movies",
 				"Movies select(mapColumn(",
 				"          movie,",
