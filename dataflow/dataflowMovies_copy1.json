@@ -82,7 +82,7 @@
 				"          NotaPiorFilme = first({Rotten Tomato})) ~> aggregateRatings",
 				"aggregateRatings sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     partitionFileNames:['consumoMovies.csv'],",
+				"     partitionFileNames:['consumoMovies2.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
