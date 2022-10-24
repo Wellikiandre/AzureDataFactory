@@ -1,0 +1,60 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"folder": {
+			"name": "Moveis"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "BronzeMovies",
+						"type": "DatasetReference"
+					},
+					"name": "input"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "output"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          movie as integer,",
+				"          title as string,",
+				"          genres as string,",
+				"          year as short,",
+				"          Rating as short,",
+				"          {Rotton Tomato} as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> input",
+				"input sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          movie as string,",
+				"          title as string,",
+				"          genres as string,",
+				"          year as string,",
+				"          Rating as string,",
+				"          {Rotton Tomato} as string",
+				"     ),",
+				"     partitionFileNames:['teste.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> output"
+			]
+		}
+	}
+}
