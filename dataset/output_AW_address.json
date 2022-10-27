@@ -1,26 +1,23 @@
 {
-	"name": "ConsumoMoviesCSV",
+	"name": "output_AW_address",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Outros"
+			"name": "AdventureWorksLT/output"
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "consumo.csv",
-				"folderPath": "Ouro",
-				"fileSystem": "disco1"
+				"fileName": "address.parquet",
+				"folderPath": "AdventureWorksLT",
+				"fileSystem": "landing-zone"
 			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			"compressionCodec": "snappy"
 		},
 		"schema": []
 	}

@@ -5,6 +5,9 @@
 			"referenceName": "HttpServerMovies",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Outros"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
