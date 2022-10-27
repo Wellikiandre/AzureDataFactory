@@ -1,0 +1,24 @@
+{
+	"name": "output_AW_customer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "AdventureWorksLT/output"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Customer.parquet",
+				"folderPath": "AdventureWorksLT",
+				"fileSystem": "landing-zone"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
