@@ -165,14 +165,7 @@
 			{
 				"name": "Copy_customer",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Copy_address",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
